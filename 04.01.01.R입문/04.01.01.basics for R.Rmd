@@ -1,9 +1,23 @@
 ---
-title: "Basic rules in R"
+title: "Chapter1. Basics in R"
+author: "Yerim Lim"
+date: "Jan 31, 2018"
 output:
-  html_document:
-    df_print: paged
+  html_notebook: 
+    theme: sandstone
+    toc: yes
+  pdf_document:
+    latex_engine: xelatex
+mainfont: NanumGothic
+editor_options: 
+  chunk_output_type: inline
 ---
+
+```{r}
+knitr::opts_chunk$set(comment="")
+```
+
+
 
 ## 벡터의 생성 
 ```{r}
@@ -14,7 +28,7 @@ a
 ```{r}
 print(a)
 ```
-```{r}
+```{OOr}
 print(x)
 ```
 
@@ -316,7 +330,7 @@ score1[score1>40]
 리스트에 대한 이해를 높이기 위해 구조를 바꾸어보자. 값 5개를 5개의  리스트로 쪼개어 할당하지 않고, 5개 값아ㅡㄹ 하나의 벡터로 묶어 하나의 리스트로 입력한다면 코딩이 어떻게 변할까? 
 ```{r}
 score1a <- list(seq(10,50, by=10))
-#score1a[score1a>40] #이건 에러가 뜬다. 리스트의 형식을 이해하자. 
+# score1a[score1a>40] #이건 에러가 뜬다. 리스트의 형식을 이해하자. 
 ```
 
 ```{r}
@@ -345,7 +359,7 @@ score12[[1]]
 score12[[1]][1]
 ```
 ```{r}
-#score12[[[1]]] 
+# score12[[[1]]] 
 ```
 위 방법으로 실행시 에러가 난다. 
 
@@ -375,6 +389,8 @@ iris1
 dim(iris); dim(iris1)
 ```
 rbind를 할 때는, 각 열의 이름이 같아야한다. 일치시킬 것. 
+
+
 
 
 새로운 데이터 프레임을 만들어서 새로운 예제를 만들어보자. 
@@ -476,7 +492,7 @@ colnames(movies)
 
 
 ```{r}
-#movies[movies$title]
+# movies[movies$title]
 head(movies[grep("skies", movies$title, ignore.case = T), c("title","year","rating")])
 
 ```
@@ -498,13 +514,124 @@ length(grep("summer", movies$title))
 ```
 
 
+```{r}
+c <- 1:10
+d <- 1:5
+d[c(1,3)]
+
+c[c(2,3)]
+c[2:3]
+
+c[c(3,2)]
+c[c>5]
+c>5
+c[c>5 & c<10]
+c[c>5 | c<10]
+```
+
+##### TRUE FALSE 조건을 더하면, OR 조건문과 같은 결과를 얻을 있다. 
+```{r}
+#아래 두 표현은 동일한 결과를 가져온다. 
+c[as.logical((c>8 ) + (c<3))]
+c[(c>8 )| (c<3)]
 
 
-sdf
+# 아래 두 가지 결과의 차이를 보아라. as.logcal을 넣는 것이 어떤 차이를 가져오는지 보자. 
+c[as.logical((c>8 ) + (c<3))]
+c[(c>8 ) + (c<3)] # c[c(1,1,0,0,0,0,0,0,1,1)] 와 같은 의미이다
+```
+
+인덱싱 ; 벡터에 이름 붙이기 
+```{r}
+years <- c(1960, 1964, 1976, 1994)
+
+names(years)
+names(years) <- c("Kennedy","Johnson","Carter","Clinton")
+
+```
+
+```{r}
+years["Carter"]
+years[3]
+
+```
+
+### 자료형 데이터 구조변환하기 
+```{r}
+as.numeric("3.14")
+as.integer(3.14)
+
+# as.numeric("foo")
+as.character(101)
+as.numeric(101)
+as.numeric(FALSE)
+as.numeric(F)
+Sys.Date()
+as.Date("2013-08-13")
+as.Date("2018.3.1", format="%Y.%m.%d")
+```
+
+### 날짜를 문자열로 변환
+```{r}
+as.Date("08/13/2013", format="%m/%d/%Y")
+format(Sys.Date())
+as.character(Sys.Date())
+format(Sys.Date(), format="%d/%m/%Y")
+format(Sys.Date(), "%a") # 줄인 요일
+format(Sys.Date(), "%A") # 요일
+format(Sys.Date(), "%b") # 몇 월인지 숫자로
+format(Sys.Date(), "%B") #몇 월인지 한그로..
+format(Sys.Date(), "%d") # 일자
+format(Sys.Date(), "%D") #날짜를 여섯자리로 보여줌
+format(Sys.Date(), "%m") #해당 달
+format(Sys.Date(), "%M")
+format(Sys.Date(), "%h")
+format(Sys.Date(), "%H")
+format(Sys.Date(), "%y") #연도를 2자리수로
+format(Sys.Date(), "%Y") # 4자리수로 
+```
+
+### Missing data
+```{r}
+a <- 0/0
+a #  구할 수 없는 값
+```
+무한대로 나가는 값
+```{r}
+is.nan(a)
+b <- log(0)
+b
+is.finite(b)
+c <- c(0:4, NA)
+c
+is.na(c)
+```
+
+### 벡터의 기본연산 (평균, 표준편차 등 기술통계량의 계산)
+```{r}
+x<- c(0,1,1,2,3,5,8,13,21,34)
+y <- log(x+1)
+x
+y
+mean(x)
+median(x)
+sd(x)
+var(x)
+cor(x,y)
+```
 
 
 
+```{r}
+c <- 1:10
+var(c)
+sum( (c-mean(c))^2 / (length(c)-1) )
 
+c[log(c)<2] 
+c[log(c)<2] <- 3 
+c
+
+```
 
 
 

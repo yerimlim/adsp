@@ -1,0 +1,113 @@
+---
+title: "Chapter2. statistical analysis"
+author: "Yerim Lim 임예림"
+date: "2018년 2월 1일"
+output:
+  pdf_document: 
+    keep_tex: yes
+    latex_engine: xelatex
+    toc: yes
+  html_notebook: 
+    toc: yes
+mainfont: NanumGothic 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(comment = "") #,prompt=TRUE, out.width=750, fig.height=10, fig.width=10
+Sys.setlocale("LC_ALL")
+```
+
+# 기초통계분석
+## 기술통계량 
+
+#### 기술통계량을 구해보자. 
+데이터를 살펴보자. 두 개의 변수로 이루어져있고, 각각 몸무게와 뇌의 크기로 이루어진 데이터임을 알 수 있다. 
+```{r}
+library(MASS)
+data("Animals")
+head(Animals)
+str(Animals)
+```
+
+<br/><br/>
+ 
+#### 기술통계량을 구해보자. <br/>
+
+```{r}
+summary(Animals)
+mean(Animals$body)
+median(Animals$body)
+sd(Animals$body)
+var(Animals$body)
+quantile(Animals$body,c(0.25, 0.5, 0.75,1))
+max(Animals$body)
+min(Animals$body)
+```
+
+
+## 상관분석
+### 피어슨 상관계수
+
+#### 이번에는 상관분석을 해보자. 
+피어슨 상관계수를 구해보고, 그래프로도 표현해보자. 
+
+```{r}
+data(mtcars)
+head(mtcars)
+str(mtcars)
+drat <- mtcars$drat
+disp <- mtcars$disp
+cor(drat, disp)
+plot(drat, disp)
+
+```
+-0.71정도로 강한 음의 상관관계가 있음을 알 수 있다. 
+<br/><br/>
+
+#### 상관계수와 공분산을 구하자.  
+```{r}
+head(cor(mtcars))
+head(cov(mtcars))
+```
+<br/>
+
+### 스피어만 상관계수
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+library(Hmisc)
+rcorr(as.matrix(mtcars), type=c("pearson","spearman"))
+```
+
+#### 예제를 풀어보자. 
+스피어만 상관계수 행렬을 통해 각변수의 선형적 상관관계를 파악할 수 있다. 
+```{r}
+studentID <- paste(2009000, 1:6, sep="")
+Korea <- c(1,18,2,3,17,19)
+Math <- c(2,3,1,6,28,5)
+Eng <- c(5,2,3,1,4,16)
+Science <- c(1,2,3,4,5,20)
+test <- data.frame(studentID,Korea, Math, Eng, Science)
+
+rcorr(as.matrix(test), type="spearman")
+
+```
+
+## 회귀분석 
+
+### 단순회귀분석
+예제를 풀어보자
+회귀방정식은 $y= 5.8951 -0.1174x$로 추정된다. 
+```{r message=FALSE, warning=FALSE}
+#난수를 추출하여 임의의 데이터프레임을 만들자
+set.seed(2)
+x=runif(10,0,11) ; x
+y=runif(10,0,11) ;y
+dfrm <- data.frame(x,y); head(dfrm)
+
+#회귀분석을 해보자. 
+lm(formula = y~x, data=dfrm) 
+
+
+```
+
+
+
