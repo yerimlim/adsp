@@ -3,18 +3,7 @@
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-    \setmainfont[]{NanumGothic}
-\fi
+\usepackage{kotex}
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
@@ -139,7 +128,8 @@
 \paragraph{기술통계량을 구해보자.}\label{-.}
 
 데이터를 살펴보자. 두 개의 변수로 이루어져있고, 각각 몸무게와 뇌의
-크기로 이루어진 데이터임을 알 수 있다.
+크기로 이루어진 데이터임을 알 수 있다. 
+다른 것도 삽입할 수 있다. 
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -267,7 +257,7 @@ Dipliodocus     11700.00  50.0
 
 \paragraph{이번에는 상관분석을 해보자.}\label{--.}
 
-피어슨 상관계수를 구해보고, 그래프로도 표현해보자.
+피어슨 상관계수를 구해보고, 그래프로도 표현해보자.\newline \newline
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -285,13 +275,17 @@ Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 \end{verbatim}
+새로운 값을 집어넣어보자. \\\\
+새로운 값을 집어넣어보자. 지금은 한번 건너뛰지\\
+지금은 두번\\\\
+
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{str}\NormalTok{(mtcars)}
 \end{Highlighting}
 \end{Shaded}
-
+얍
 \begin{verbatim}
 'data.frame':   32 obs. of  11 variables:
  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
@@ -306,6 +300,8 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
 \end{verbatim}
+
+\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -327,6 +323,8 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
 
 \includegraphics{04.02.01.basic_statistical_analysis_files/figure-latex/unnamed-chunk-3-1.pdf}
 -0.71정도로 강한 음의 상관관계가 있음을 알 수 있다.
+
+
 
 \paragraph{상관계수와 공분산을 구하자.}\label{--.}
 
@@ -351,7 +349,10 @@ disp -0.43369788 -0.7104159 -0.5912270 -0.5555692  0.3949769
 hp   -0.70822339 -0.7230967 -0.2432043 -0.1257043  0.7498125
 drat  0.09120476  0.4402785  0.7127111  0.6996101 -0.0907898
 wt   -0.17471588 -0.5549157 -0.6924953 -0.5832870  0.4276059
+그렇다. 
 \end{verbatim}
+여기에 또 다른 값을 집어넣는다. 
+
 
 \begin{Shaded}
 \begin{Highlighting}[]

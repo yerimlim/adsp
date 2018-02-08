@@ -3,23 +3,22 @@ title: "Chapter1. Basics in R"
 author: "Yerim Lim"
 date: "Jan 31, 2018"
 output:
-  html_notebook: 
+  html_notebook:
     theme: sandstone
     toc: yes
   pdf_document:
     latex_engine: xelatex
 mainfont: NanumGothic
-editor_options: 
+editor_options:
   chunk_output_type: inline
 ---
 
 ```{r}
-knitr::opts_chunk$set(comment="")
+knitr::opts_chunk$set(comment="") 
 ```
 
 
-
-## 벡터의 생성 
+## 벡터의 생성
 ```{r}
 a <- 1
 x <- 3
@@ -42,14 +41,14 @@ c(1,1,2,3,5,6,13,21)
 ```
 
 
-벡터 내 계산 
+벡터 내 계산
 ```{r}
 c(1*pi, 2*pi, 3*pi, 4*pi)
 a <- 1:4  ;a*pi
 ```
 
 
- 논리형 벡터 
+ 논리형 벡터
 ```{r}
 c(TRUE, FALSE,TRUE)
 ```
@@ -112,7 +111,7 @@ rep(1:2, times=2)
 ```{r}
 c <- 1:5
 c
-rep(c,5) #벡터 c를 5번 반복하라. 
+rep(c,5) #벡터 c를 5번 반복하라.
 ```
 
 ```{r}
@@ -154,7 +153,7 @@ f
 ```{r}
 paste(A,10,sep="")
 ```
-paste 기능은 변수명을 할당할 때 쓰기 유용하다. 아래와 같이 사용하면 좋다. 
+paste 기능은 변수명을 할당할 때 쓰기 유용하다. 아래와 같이 사용하면 좋다.
 ```{r}
 paste(A, 1:10, sep="")
 ```
@@ -174,7 +173,7 @@ substr(문자열, 시작, 끝)
 substr("BigDataAnalysis",1,4)
 ```
 
-벡터에도 사용할 있다. 
+벡터에도 사용할 있다.
 ```{r}
 ss <- c("Moe","Larry","Curly")
 substr(ss, 1,3)
@@ -281,7 +280,7 @@ lst <- list(3.14, "MOE", c(1,1,2,3), mean)
 lst
 ```
 
-각 리스트의 원소들에 태그를 부여하자. 
+각 리스트의 원소들에 태그를 부여하자.
 ```{r}
 a <- 1:10
 b <- matrix(1:10,2,5)
@@ -307,7 +306,7 @@ alst[2]
 alst[[2]]
 ```
 
-리스트를 벡터함수를 통해 합칠 수있다. 
+리스트를 벡터함수를 통해 합칠 수있다.
 ```{r}
 ablst <- c(alst,blst)
 ablst
@@ -327,22 +326,22 @@ score2 <- list(c("a","b"))
 score1[score1>40]
 ```
 
-리스트에 대한 이해를 높이기 위해 구조를 바꾸어보자. 값 5개를 5개의  리스트로 쪼개어 할당하지 않고, 5개 값아ㅡㄹ 하나의 벡터로 묶어 하나의 리스트로 입력한다면 코딩이 어떻게 변할까? 
+리스트에 대한 이해를 높이기 위해 구조를 바꾸어보자. 값 5개를 5개의  리스트로 쪼개어 할당하지 않고, 5개 값아ㅡㄹ 하나의 벡터로 묶어 하나의 리스트로 입력한다면 코딩이 어떻게 변할까?
 ```{r}
 score1a <- list(seq(10,50, by=10))
-# score1a[score1a>40] #이건 에러가 뜬다. 리스트의 형식을 이해하자. 
+# score1a[score1a>40] #이건 에러가 뜬다. 리스트의 형식을 이해하자.
 ```
 
 ```{r}
 score1a[[1]][score1a[[1]]>40]
 ```
 
-리스트 형식을 합쳐보자. 
+리스트 형식을 합쳐보자.
 ```{r}
 score12 <- list(score1, score2)
 score12
 ```
-리스트의 하위항목이 늘어난 것을 볼 있다. 
+리스트의 하위항목이 늘어난 것을 볼 있다.
 
 
 
@@ -359,9 +358,9 @@ score12[[1]]
 score12[[1]][1]
 ```
 ```{r}
-# score12[[[1]]] 
+# score12[[[1]]]
 ```
-위 방법으로 실행시 에러가 난다. 
+위 방법으로 실행시 에러가 난다.
 
 ### 데이터 프레임
 ```{r}
@@ -388,12 +387,12 @@ iris1 <- rbind(iris, newRow)
 iris1
 dim(iris); dim(iris1)
 ```
-rbind를 할 때는, 각 열의 이름이 같아야한다. 일치시킬 것. 
+rbind를 할 때는, 각 열의 이름이 같아야한다. 일치시킬 것.
 
 
 
 
-새로운 데이터 프레임을 만들어서 새로운 예제를 만들어보자. 
+새로운 데이터 프레임을 만들어서 새로운 예제를 만들어보자.
 ```{r}
 name <- c("john","peter","jennifer")
 gender <- factor(c("m","m","f"))
@@ -420,8 +419,8 @@ subset(iris,subset=(Petal.Length>1.7) , select = Species) # same result
 
 ```
 
-```{r} 
-subset(iris, c(Sepal.Length, Petal.Length, Species), 
+```{r}
+subset(iris, c(Sepal.Length, Petal.Length, Species),
        subset=((Sepal.Width==3.0)&(Petal.Width==0.2)))
 ```
 
@@ -451,7 +450,7 @@ died
 merge(born,died, by="name")
 ```
 
-다른 예제를 풀어보자. 
+다른 예제를 풀어보자.
 ```{r}
 data(mtcars)
 head(mtcars)
@@ -529,19 +528,19 @@ c[c>5 & c<10]
 c[c>5 | c<10]
 ```
 
-##### TRUE FALSE 조건을 더하면, OR 조건문과 같은 결과를 얻을 있다. 
+##### TRUE FALSE 조건을 더하면, OR 조건문과 같은 결과를 얻을 있다.
 ```{r}
-#아래 두 표현은 동일한 결과를 가져온다. 
+#아래 두 표현은 동일한 결과를 가져온다.
 c[as.logical((c>8 ) + (c<3))]
 c[(c>8 )| (c<3)]
 
 
-# 아래 두 가지 결과의 차이를 보아라. as.logcal을 넣는 것이 어떤 차이를 가져오는지 보자. 
+# 아래 두 가지 결과의 차이를 보아라. as.logcal을 넣는 것이 어떤 차이를 가져오는지 보자.
 c[as.logical((c>8 ) + (c<3))]
 c[(c>8 ) + (c<3)] # c[c(1,1,0,0,0,0,0,0,1,1)] 와 같은 의미이다
 ```
 
-인덱싱 ; 벡터에 이름 붙이기 
+인덱싱 ; 벡터에 이름 붙이기
 ```{r}
 years <- c(1960, 1964, 1976, 1994)
 
@@ -556,7 +555,7 @@ years[3]
 
 ```
 
-### 자료형 데이터 구조변환하기 
+### 자료형 데이터 구조변환하기
 ```{r}
 as.numeric("3.14")
 as.integer(3.14)
@@ -588,7 +587,7 @@ format(Sys.Date(), "%M")
 format(Sys.Date(), "%h")
 format(Sys.Date(), "%H")
 format(Sys.Date(), "%y") #연도를 2자리수로
-format(Sys.Date(), "%Y") # 4자리수로 
+format(Sys.Date(), "%Y") # 4자리수로
 ```
 
 ### Missing data
@@ -627,12 +626,8 @@ c <- 1:10
 var(c)
 sum( (c-mean(c))^2 / (length(c)-1) )
 
-c[log(c)<2] 
-c[log(c)<2] <- 3 
+c[log(c)<2]
+c[log(c)<2] <- 3
 c
 
 ```
-
-
-
-
