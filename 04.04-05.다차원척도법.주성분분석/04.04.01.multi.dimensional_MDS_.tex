@@ -1,0 +1,356 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={04.04.01.multi.dimensional\_MDS\_.R},
+            pdfauthor={Yerim},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{04.04.01.multi.dimensional\_MDS\_.R}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Yerim}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{Fri Feb 09 23:38:15 2018}
+
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# MDS multi dimensional scaling 다차원 척도법----------------------------------------------------------------}
+
+
+\KeywordTok{data}\NormalTok{(}\StringTok{"eurodist"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(eurodist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3313 2963 3175 3339 2762 3276
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(eurodist)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Class 'dist'  atomic [1:210] 3313 2963 3175 3339 2762 ...
+##   ..- attr(*, "Size")= num 21
+##   ..- attr(*, "Labels")= chr [1:21] "Athens" "Barcelona" "Brussels" "Calais" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{loc <-}\StringTok{ }\KeywordTok{cmdscale}\NormalTok{(eurodist)}
+\NormalTok{loc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                         [,1]        [,2]
+## Athens           2290.274680  1798.80293
+## Barcelona        -825.382790   546.81148
+## Brussels           59.183341  -367.08135
+## Calais            -82.845973  -429.91466
+## Cherbourg        -352.499435  -290.90843
+## Cologne           293.689633  -405.31194
+## Copenhagen        681.931545 -1108.64478
+## Geneva             -9.423364   240.40600
+## Gibraltar       -2048.449113   642.45854
+## Hamburg           561.108970  -773.36929
+## Hook of Holland   164.921799  -549.36704
+## Lisbon          -1935.040811    49.12514
+## Lyons            -226.423236   187.08779
+## Madrid          -1423.353697   305.87513
+## Marseilles       -299.498710   388.80726
+## Milan             260.878046   416.67381
+## Munich            587.675679    81.18224
+## Paris            -156.836257  -211.13911
+## Rome              709.413282  1109.36665
+## Stockholm         839.445911 -1836.79055
+## Vienna            911.230500   205.93020
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{loc[, }\DecValTok{1}\NormalTok{]}
+\NormalTok{y <-}\StringTok{ }\NormalTok{loc[, }\DecValTok{2}\NormalTok{]}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{type =} \StringTok{"n"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"eurodist"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(x, y, }\KeywordTok{rownames}\NormalTok{(loc), }\DataTypeTok{cex =} \FloatTok{0.8}\NormalTok{)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =} \DecValTok{0}\NormalTok{, }\DataTypeTok{h =} \DecValTok{0}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04.04.01.multi.dimensional_MDS__files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# PCA ---------------------------------------------------------------------}
+
+
+\KeywordTok{library}\NormalTok{(datasets)}
+\KeywordTok{data}\NormalTok{(}\StringTok{"USArrests"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(USArrests)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata <-}\StringTok{ }\NormalTok{USArrests}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{princomp}\NormalTok{(mydata, }\DataTypeTok{cor =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                           Comp.1    Comp.2    Comp.3     Comp.4
+## Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
+## Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
+## Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{loadings =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                           Comp.1    Comp.2    Comp.3     Comp.4
+## Standard deviation     1.5748783 0.9948694 0.5971291 0.41644938
+## Proportion of Variance 0.6200604 0.2474413 0.0891408 0.04335752
+## Cumulative Proportion  0.6200604 0.8675017 0.9566425 1.00000000
+## 
+## Loadings:
+##          Comp.1 Comp.2 Comp.3 Comp.4
+## Murder   -0.536  0.418 -0.341  0.649
+## Assault  -0.583  0.188 -0.268 -0.743
+## UrbanPop -0.278 -0.873 -0.378  0.134
+## Rape     -0.543 -0.167  0.818
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{loadings}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Loadings:
+##          Comp.1 Comp.2 Comp.3 Comp.4
+## Murder   -0.536  0.418 -0.341  0.649
+## Assault  -0.583  0.188 -0.268 -0.743
+## UrbanPop -0.278 -0.873 -0.378  0.134
+## Rape     -0.543 -0.167  0.818       
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4
+## SS loadings      1.00   1.00   1.00   1.00
+## Proportion Var   0.25   0.25   0.25   0.25
+## Cumulative Var   0.25   0.50   0.75   1.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"lines"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04.04.01.multi.dimensional_MDS__files/figure-latex/unnamed-chunk-1-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit}\OperatorTok{$}\NormalTok{scores}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                     Comp.1      Comp.2      Comp.3       Comp.4
+## Alabama        -0.98556588  1.13339238 -0.44426879  0.156267145
+## Alaska         -1.95013775  1.07321326  2.04000333 -0.438583440
+## Arizona        -1.76316354 -0.74595678  0.05478082 -0.834652924
+## Arkansas        0.14142029  1.11979678  0.11457369 -0.182810896
+## California     -2.52398013 -1.54293399  0.59855680 -0.341996478
+## Colorado       -1.51456286 -0.98755509  1.09500699  0.001464887
+## Connecticut     1.35864746 -1.08892789 -0.64325757 -0.118469414
+## Delaware       -0.04770931 -0.32535892 -0.71863294 -0.881977637
+## Florida        -3.01304227  0.03922851 -0.57682949 -0.096284752
+## Georgia        -1.63928304  1.27894240 -0.34246008  1.076796812
+## Hawaii          0.91265715 -1.57046001  0.05078189  0.902806864
+## Idaho           1.63979985  0.21097292  0.25980134 -0.499104101
+## Illinois       -1.37891072 -0.68184119 -0.67749564 -0.122021292
+## Indiana         0.50546136 -0.15156254  0.22805484  0.424665700
+## Iowa            2.25364607 -0.10405407  0.16456432  0.017555916
+## Kansas          0.79688112 -0.27016470  0.02555331  0.206496428
+## Kentucky        0.75085907  0.95844029 -0.02836942  0.670556671
+## Louisiana      -1.56481798  0.87105466 -0.78348036  0.454728038
+## Maine           2.39682949  0.37639158 -0.06568239 -0.330459817
+## Maryland       -1.76336939  0.42765519 -0.15725013 -0.559069521
+## Massachusetts   0.48616629 -1.47449650 -0.60949748 -0.179598963
+## Michigan       -2.10844115 -0.15539682  0.38486858  0.102372019
+## Minnesota       1.69268181 -0.63226125  0.15307043  0.067316885
+## Mississippi    -0.99649446  2.39379599 -0.74080840  0.215508013
+## Missouri       -0.69678733 -0.26335479  0.37744383  0.225824461
+## Montana         1.18545191  0.53687437  0.24688932  0.123742227
+## Nebraska        1.26563654 -0.19395373  0.17557391  0.015892888
+## Nevada         -2.87439454 -0.77560020  1.16338049  0.314515476
+## New Hampshire   2.38391541 -0.01808229  0.03685539 -0.033137338
+## New Jersey     -0.18156611 -1.44950571 -0.76445355  0.243382700
+## New Mexico     -1.98002375  0.14284878  0.18369218 -0.339533597
+## New York       -1.68257738 -0.82318414 -0.64307509 -0.013484369
+## North Carolina -1.12337861  2.22800338 -0.86357179 -0.954381667
+## North Dakota    2.99222562  0.59911882  0.30127728 -0.253987327
+## Ohio            0.22596542 -0.74223824 -0.03113912  0.473915911
+## Oklahoma        0.31178286 -0.28785421 -0.01530979  0.010332321
+## Oregon         -0.05912208 -0.54141145  0.93983298 -0.237780688
+## Pennsylvania    0.88841582 -0.57110035 -0.40062871  0.359061124
+## Rhode Island    0.86377206 -1.49197842 -1.36994570 -0.613569430
+## South Carolina -1.32072380  1.93340466 -0.30053779 -0.131466685
+## South Dakota    1.98777484  0.82334324  0.38929333 -0.109571764
+## Tennessee      -0.99974168  0.86025130  0.18808295  0.652864291
+## Texas          -1.35513821 -0.41248082 -0.49206886  0.643195491
+## Utah            0.55056526 -1.47150461  0.29372804 -0.082314047
+## Vermont         2.80141174  1.40228806  0.84126309 -0.144889914
+## Virginia        0.09633491  0.19973529  0.01171254  0.211370813
+## Washington      0.21690338 -0.97012418  0.62487094 -0.220847793
+## West Virginia   2.10858541  1.42484670  0.10477467  0.131908831
+## Wisconsin       2.07971417 -0.61126862 -0.13886500  0.184103743
+## Wyoming         0.62942666  0.32101297 -0.24065923 -0.166651801
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{biplot}\NormalTok{(fit) }\CommentTok{# 주성분 분석 도표로 나타내는 것}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{04.04.01.multi.dimensional_MDS__files/figure-latex/unnamed-chunk-1-3.pdf}
+
+
+\end{document}
