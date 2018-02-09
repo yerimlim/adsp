@@ -120,13 +120,15 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">04.03.01.timeseries_analysis.R</h1>
 <h4 class="author"><em>Yerim</em></h4>
-<h4 class="date"><em>Thu Feb 08 22:20:19 2018</em></h4>
+<h4 class="date"><em>Thu Feb 08 22:34:28 2018</em></h4>
 
 </div>
 
 
-<pre class="r"><code>library('TTR')
-library('forecast')
+<pre class="r"><code>#rmarkdown::render(&quot;04.03.01.timeseries_analysis.r&quot;, &quot;pdf_document&quot;)
+
+library(TTR)
+library(forecast)
 
 # reading data ------------------------------------------------------------
 kings &lt;- scan('https://robjhyndman.com/tsdldata/misc/kings.dat', skip=3)
