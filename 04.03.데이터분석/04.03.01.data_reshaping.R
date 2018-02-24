@@ -45,6 +45,14 @@ sqldf("select * from iris limit 10")
 sqldf("select count(*) from iris where Species like 'Se%'")
 
 
+head(iris)
+sqldf("select * from iris limit 6")
+subset(iris, Species %in% "setosa")
+sqldf("select * from iris where Species in ('setosa')")
+
+rbind(x, y)
+sqldf("select * from x union all select * from y")
+
 # plyr --------------------------------------------------------------------
 library(plyr)
 
@@ -166,7 +174,7 @@ dt <- data.table(a = LETTERS[c(1, 1:3)], b = 4:7, key = "a")
 dt
 
 dt[, c := 8]
-dt 
+dt
 dt[, d := 9L]
 dt
 dt[, c := NULL]
@@ -183,4 +191,3 @@ dt["B", f := mean(d)]
 dt
 dt <- data.table(a = 1:5, b = 6:10)
 dt[b %between% c(7, 9)]
-
